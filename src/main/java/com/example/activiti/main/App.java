@@ -52,15 +52,26 @@ public class App
         final Map<String, Object> variables = new HashMap<String, Object>();
         final RuntimeService runtimeService = processEngine.getRuntimeService();
 
+        variables.put("processVar", "processVarValue");
         ProcessInstance id = runtimeService.startProcessInstanceByKey("myProcess", variables);
         System.out.println("Started Process Id: "+id.getId());
         try {
             final TaskService taskService = processEngine.getTaskService();
-//            List<Task> tasks = taskService.createTaskQuery().active().list();
+            List<Task> tasks = taskService.createTaskQuery().active().list();
+            System.out.println("Found tasks: "+tasks.size());
+            Task task = tasks.get(0);
+            taskService.setVariable(task.getId(), "taskVar", "taskVarValue");
+            taskService.setVariableLocal(task.getId(), "processVar", "processVarValue");
+            runtimeService.setVariable(task.getExecutionId(), "execVar", "execVarValue");
+ 
+            System.out.println("Task Variables: " + taskService.getVariables(task.getId()).keySet().toString());
+
 //            while (!tasks.isEmpty()) {
 //                Task task = tasks.get(0);
 //                taskService.complete(task.getId());
+//                System.out.println("Completed task: "+task.getId());
 //                tasks = taskService.createTaskQuery().active().list();
+//                System.out.println("Found tasks: "+tasks.size());
 //            }
 
         } catch (Exception e) {
