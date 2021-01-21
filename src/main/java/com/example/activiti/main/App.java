@@ -73,8 +73,9 @@ public class App
 
         }
 
-        while(!runtimeService.createExecutionQuery().list().isEmpty()) {
-        }
+//        while(!runtimeService.createExecutionQuery().list().isEmpty()) {
+//        }
+        Thread.sleep(20000); //wait for 20 secs to finish
         processEngine.close();
     }
 
