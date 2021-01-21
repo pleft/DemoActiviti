@@ -13,6 +13,7 @@ public class TimerService implements JavaDelegate {
     public void execute(DelegateExecution execution) throws Exception {
         LOGGER.info("*** Executing Timer autocomplete ***");
         Task task = execution.getEngineServices().getTaskService().createTaskQuery().active().singleResult();
+        execution.getEngineServices().getTaskService().setVariableLocal(task.getId(), "taskLocalVar", "task_local_var_value");
         execution.getEngineServices().getTaskService().complete(task.getId());
         LOGGER.info("*** Task: {} autocompleted by timer ***", task.getId());
     }

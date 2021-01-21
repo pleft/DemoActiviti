@@ -2,6 +2,7 @@ package com.example.activiti.main;
 
 import org.activiti.engine.*;
 import org.activiti.engine.impl.cfg.StandaloneProcessEngineConfiguration;
+import org.activiti.engine.impl.jobexecutor.DefaultJobExecutor;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.Execution;
@@ -22,6 +23,9 @@ public class App
 //        demoAsyncJobExecutor.setMaxPoolSize(50);
 //        demoAsyncJobExecutor.setKeepAliveTime(10000);
 //        demoAsyncJobExecutor.setMaxAsyncJobsDuePerAcquisition(50);
+    	
+    	DefaultJobExecutor defaultJobExecutor = new DefaultJobExecutor();
+    	defaultJobExecutor.setWaitTimeInMillis(10000);
 
         ProcessEngineConfiguration cfg = new StandaloneProcessEngineConfiguration()
                 .setJdbcUrl("jdbc:h2:mem:activiti;DB_CLOSE_DELAY=1000")
